@@ -1,0 +1,40 @@
+import requests
+
+def translate_word(word, target_language):
+    api_key = 'YOUR_API_KEY'
+    base_url = 'https://translation.googleapis.com/language/translate/v2'
+
+    params = {
+        'q': word,
+        'target': target_language,
+        'key': api_key
+    }
+
+    response = requests.get(base_url, params=params)
+    translation_data = response.json()
+
+    translation = translation_data['data']['translations'][0]['translatedText']
+    return translation
+
+print("单词翻译命令行工具")
+
+while True:
+    print("\n请选择操作：")
+    print("1. 输入单词和目标语言进行翻译")
+    print("2. 退出程序")
+
+    choice = input("请选择操作（输入数字）：")
+
+    if choice == '2':
+        print("谢谢使用，再见！")
+        break
+
+    if choice != '1':
+        print("无效的选择，请重新输入。")
+        continue
+
+    word = input("请输入要翻译的单词：")
+    target_language = input("请输入目标语言代码（例如，zh-CN表示中文简体）：")
+
+    translation = translate_word(word, target_language)
+    print(f"{word} 的翻译结果：{translation}")
